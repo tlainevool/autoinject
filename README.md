@@ -10,6 +10,8 @@ I ran accross these two example in Python: http://code.activestate.com/recipes/4
 
 I was inspired to write my own Constructor based Dynamic Injection.
 
+If you are wondering about how to create decorators, this [amazing Stack Overflow Answer](https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators#answer-1594484) is a great resource.
+
 ## Basic Usage
 
 The first step that needs to be done is to create some components that can be injected into classes:
