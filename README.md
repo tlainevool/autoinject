@@ -9,12 +9,16 @@ I ran accross these two example in Python: http://code.activestate.com/recipes/4
 
 I was inspired to write my own Constructor based Dynamic Injection.
 
-AutoInject lets you do decorator based injection like this:
-  
-    from autoinject import components, autoinject
-      
+The first step that needs to be done is to create some components that can be injected into classes:
+
     components['finder'] = movie_components.MontyPythonMovieFinder('monty_python.txt')
     components['printer'] = movie_components.Printer()
+
+Each component has a name (e.g. finder, printer)
+
+AutoInject lets you do inject these components into an object using a decorator like this:
+  
+    from autoinject import components, autoinject
       
     class AnotherMovieLister:
         @autoinject("movie_finder=finder", "printer=printer")
@@ -22,12 +26,20 @@ AutoInject lets you do decorator based injection like this:
             pass
      
 
+The arguments to the @autoinject decorator are of the form "<argument_name>=<named_component>".
+
 Or you can do injection without modyfing the original class, like this:
-    from autoinject import components, add_autoinject
-    
-    components['finder'] = my_components.MontyPythonMovieFinder()
-    components['printer'] = my_components.Printer()
-      
+
     add_autoinject(my_components.MovieLister, 'movie_finder=finder', 'printer=printer')   
+
+Once you have specified your injection, either decorator based, or direct, you can now create your objects:
+
+    movie_lister = AnotherMovieLister()
     
-See thefiles in the examples directory for fuller examples
+Note that though the original constructor of AnotherMovieLister took in two arguments, you can cnow call the constructor without these argumants, and they will be automatically injected.
+
+You can also override the automatically injected components by specifying keyword arguments in the constructor:
+
+    movie_lister = AnotherMovieLister(printer=FancyPrinter())
+
+See the files in the examples directory for fuller examples
