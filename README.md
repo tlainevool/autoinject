@@ -1,4 +1,5 @@
 # autoinject
+
 Simple Python Dynamic Injection Framework
 
 Being new to Python after being immersed in the Java world, I was wonder if there were any Dependency Injection Frameworks for setting up components like SPring Does for Java.
@@ -8,6 +9,8 @@ For a background on Dependency Injection see Martin Fowler's article: https://ma
 I ran accross these two example in Python: http://code.activestate.com/recipes/413268/ and http://code.activestate.com/recipes/576609/
 
 I was inspired to write my own Constructor based Dynamic Injection.
+
+## Basic Usage
 
 The first step that needs to be done is to create some components that can be injected into classes:
 
@@ -43,3 +46,7 @@ You can also override the automatically injected components by specifying keywor
     movie_lister = AnotherMovieLister(printer=FancyPrinter())
 
 See the files in the examples directory for fuller examples
+
+## Ideas for Enhancements
+- Get rid of the need to have argname=component name lsist - allow matching by position or match component names to argument names if they are the same.
+- Allow for component naming and injection in on step, e.g. build_componet('name', Bar, 'some_arg=some_component) 
