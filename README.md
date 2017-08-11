@@ -14,8 +14,8 @@ I was inspired to write my own Constructor based Dynamic Injection.
 
 The first step that needs to be done is to create some components that can be injected into classes:
 
-    from autoinject import components, autoinject
-
+    from autoinject import components, autoinject, add_autoinject
+        
     components['finder'] = movie_components.MontyPythonMovieFinder('monty_python.txt')
     components['printer'] = movie_components.Printer()
 
@@ -23,7 +23,7 @@ Each component has a name (e.g. finder, printer)
 
 AutoInject lets you do inject these components into an object using a decorator like this:
       
-    class AnotherMovieLister:
+    class MovieLister:
         @autoinject("movie_finder=finder", "printer=printer")
         def __init__(self, movie_finder, printer):
             pass
@@ -31,21 +31,26 @@ AutoInject lets you do inject these components into an object using a decorator 
 
 The arguments to the @autoinject decorator are of the form "<argument_name>=<named_component>".
 
-Or you can do injection without modyfing the original class, like this:
+You can also do injection without modyfing the original class, like this:
 
-    add_autoinject(my_components.MovieLister, 'movie_finder=finder', 'printer=printer')   
+    class AnotherMovieLister:
+        
+        def __init__(self, movie_finder, printer):
+            pass
+     
+    add_autoinject(my_components.AnotherMovieLister, 'movie_finder=finder', 'printer=printer')   
 
 Once you have specified your injection, either decorator based, or direct, you can now create your objects:
 
-    movie_lister = AnotherMovieLister()
+    movie_lister = MovieLister()
     
-Note that though the original constructor of AnotherMovieLister took in two arguments, you can cnow call the constructor without these argumants, and they will be automatically injected.
+Note that though the original constructor of AnotherMovieLister took in two arguments, you can now call the constructor without these argumants, and they will be automatically injected.
 
 You can also override the automatically injected components by specifying keyword arguments in the constructor:
 
-    movie_lister = AnotherMovieLister(printer=FancyPrinter())
+    movie_lister = MovieLister(printer=FancyPrinter())
 
-See the files in the examples directory for fuller examples
+See the files in the examples directory for more complete examples
 
 ## Ideas for Enhancements
 - Get rid of the need to have argname=component name lsist - allow matching by position or match component names to argument names if they are the same.
