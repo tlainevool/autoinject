@@ -11,14 +11,14 @@ I was inspired to write my own Constructor based Dynamic Injection.
 
 The first step that needs to be done is to create some components that can be injected into classes:
 
+    from autoinject import components, autoinject
+
     components['finder'] = movie_components.MontyPythonMovieFinder('monty_python.txt')
     components['printer'] = movie_components.Printer()
 
 Each component has a name (e.g. finder, printer)
 
 AutoInject lets you do inject these components into an object using a decorator like this:
-  
-    from autoinject import components, autoinject
       
     class AnotherMovieLister:
         @autoinject("movie_finder=finder", "printer=printer")
